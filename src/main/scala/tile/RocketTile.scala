@@ -11,7 +11,7 @@ import freechips.rocketchip.diplomaticobjectmodel.logicaltree.{DCacheLogicalTree
 import freechips.rocketchip.interrupts._
 import freechips.rocketchip.tilelink._
 import freechips.rocketchip.rocket._
-import freechips.rocketchip.subsystem.{SubsystemResetSchemeKey, ResetSynchronous, RocketCrossingParams, HartPrefixKey}
+import freechips.rocketchip.subsystem.{SubsystemResetSchemeKey, ResetSynchronous, HartPrefixKey, TileCrossingParamsLike}
 import freechips.rocketchip.util._
 
 case class RocketTileParams(
@@ -46,7 +46,7 @@ class RocketTile private(
     with HasICacheFrontend
 {
   // Private constructor ensures altered LazyModule.p is used implicitly
-  def this(params: RocketTileParams, crossing: RocketCrossingParams, lookup: LookupByHartIdImpl)(implicit p: Parameters) =
+  def this(params: RocketTileParams, crossing: TileCrossingParamsLike, lookup: LookupByHartIdImpl)(implicit p: Parameters) =
     this(params, crossing.crossingType, lookup, p)
 
   val intOutwardNode = IntIdentityNode()

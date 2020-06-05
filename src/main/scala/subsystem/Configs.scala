@@ -41,6 +41,13 @@ class BaseSubsystemConfig extends Config ((site, here, up) => {
   case DebugModuleKey => Some(DefaultDebugModuleParams(site(XLen)))
   case CLINTKey => Some(CLINTParams())
   case PLICKey => Some(PLICParams())
+  case TilesLocated(InSubsystem) => {
+    val tileParams = site(RocketTilesKey)
+    val crossingParams = heterogeneousOrGlobalSetting(site(RocketCrossingKey), tileParams.size)
+    tileParams.zip(crossingParams).map { case (t, c) =>
+      RocketTileAttachParams(t, c, PriorityMuxHartIdFromSeq(tileParams))
+    }
+  }
 })
 
 /* Composable partial function Configs to set individual parameters */
